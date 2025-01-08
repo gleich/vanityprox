@@ -4,7 +4,7 @@ FROM golang:1.23 AS build
 WORKDIR /src
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/vanityprox ./cmd/vanityprox.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/vanityprox .
 
 FROM alpine:3.20.2
 
