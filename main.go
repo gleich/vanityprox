@@ -15,7 +15,11 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handle)
 
-	err := http.ListenAndServe(":8000", mux)
+	server := http.Server{
+		Addr:    ":8000",
+		Handler: logRequest(mux),
+	}
+	err := server.ListenAndServe()
 	if err != nil {
 		lumber.Fatal(err, "failed to start server")
 	}
@@ -55,5 +59,12 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	lumber.Done("processed", name)
+}
+
+func logRequest(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		next.ServeHTTP(w, r)
+		lumber.Done(r.Method, r.URL.Path, time.Since(start))
+	})
 }
