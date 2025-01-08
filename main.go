@@ -31,6 +31,11 @@ func setupLogger() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
+	if strings.HasSuffix(r.URL.Path, "/info/refs") {
+		http.Error(w, "This server does not serve Git repositories.", http.StatusNotFound)
+		return
+	}
+
 	name := strings.TrimPrefix(r.URL.Path, "/")
 	if name == "" {
 		http.Error(w, "Project name not specified", http.StatusNotFound)
