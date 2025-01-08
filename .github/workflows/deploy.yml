@@ -1,0 +1,22 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  caprover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u gleich --password-stdin
+          docker build -t ghcr.io/gleich/vanityprox/vanityprox .
+          docker push ghcr.io/gleich/vanityprox/vanityprox
+      - uses: caprover/deploy-from-github@v1.1.2
+        with:
+          server: https://dev.mattglei.ch
+          app: vanityprox
+          token: '${{ secrets.CAPROVER_APP_TOKEN }}'
+          image: ghcr.io/gleich/vanityprox/vanityprox
