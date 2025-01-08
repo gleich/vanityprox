@@ -41,6 +41,10 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Project name not specified", http.StatusNotFound)
 		return
 	}
+	if name == "favicon.ico" {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 	root := strings.Split(name, "/")[0]
 
 	data := templateData{ProjectName: name, ProjectRoot: root}
