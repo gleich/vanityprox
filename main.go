@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
-	"net/url"
 	"strings"
 	"time"
 
@@ -38,14 +36,15 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Project name not specified", http.StatusNotFound)
 		return
 	}
+	root := strings.Split(name, "/")[0]
 
-	redirectURL, err := url.JoinPath("https://github.com/gleich/", name)
+	data := templateData{ProjectName: name, ProjectRoot: root}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	err := htmlTemplate.Execute(w, data)
 	if err != nil {
-		err = fmt.Errorf("%v failed to join path", err)
-		lumber.Error(err)
+		lumber.Error(err, "failed to execute HTML template")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
-	lumber.Done("redirected", name, "->", redirectURL)
+	lumber.Done("processed", name)
 }
