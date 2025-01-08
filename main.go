@@ -38,7 +38,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 
 	name := strings.TrimPrefix(r.URL.Path, "/")
 	if name == "" {
-		http.Error(w, "Project name not specified", http.StatusNotFound)
+		http.Redirect(w, r, "https://github.com/gleich/vanityprox", http.StatusMovedPermanently)
 		return
 	}
 	if name == "favicon.ico" {
