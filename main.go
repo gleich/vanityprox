@@ -1,7 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/gleich/lumber/v3"
@@ -12,7 +15,7 @@ func main() {
 	lumber.Info("booted")
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/{name}", handle)
+	mux.HandleFunc("/", handle)
 
 	err := http.ListenAndServe(":8000", mux)
 	if err != nil {
@@ -30,17 +33,19 @@ func setupLogger() {
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
-	name := r.PathValue("name")
+	name := strings.TrimPrefix(r.URL.Path, "/")
 	if name == "" {
 		http.Error(w, "Project name not specified", http.StatusNotFound)
 		return
 	}
 
-	data := templateData{ProjectName: name}
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err := htmlTemplate.Execute(w, data)
+	redirectURL, err := url.JoinPath("https://github.com/gleich/", name)
 	if err != nil {
+		err = fmt.Errorf("%v failed to join path", err)
+		lumber.Error(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	http.Redirect(w, r, redirectURL, http.StatusTemporaryRedirect)
+	lumber.Done("redirected", name, "->", redirectURL)
 }
