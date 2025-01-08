@@ -1,4 +1,4 @@
-module github.com/gleich/vanityprox
+module pkg.mattglei.ch/vanityprox
 
 go 1.23.4
 
