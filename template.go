@@ -19,7 +19,7 @@ var htmlTemplate = template.Must(template.New("gometa").Parse(`
     />
     <meta
       name="go-source"
-      content="pkg.mattglei.ch/{{.ProjectName}} https://github.com/gleich/{{.ProjectRoot}} https://github.com/gleich/tree/main/{{.ProjectRoot}}{/dir} https://github.com/gleich/{{.ProjectRoot}}/blob/main{/dir}/{file}#{line}"
+      content="pkg.mattglei.ch/{{.ProjectName}} https://github.com/gleich/{{.ProjectRoot}} https://github.com/gleich/{{.ProjectRoot}}/tree/main/{/dir} https://github.com/gleich/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
     />
     <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/github.com/gleich/{{.ProjectName}}">
     <title>{{.ProjectName}}</title>
