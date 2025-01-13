@@ -46,7 +46,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if name == "favicon.ico" {
-		w.WriteHeader(http.StatusNotFound)
+		http.Error(w, "Not found.", http.StatusNotFound)
 		return
 	}
 	root := strings.Split(name, "/")[0]
