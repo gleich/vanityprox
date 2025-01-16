@@ -7,8 +7,7 @@ type templateData struct {
 	ProjectRoot string
 }
 
-var htmlTemplate = template.Must(template.New("gometa").Parse(`
-<!DOCTYPE html>
+var htmlTemplate = template.Must(template.New("gometa").Parse(`<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -22,6 +21,7 @@ var htmlTemplate = template.Must(template.New("gometa").Parse(`
       content="pkg.mattglei.ch/{{.ProjectName}} https://github.com/gleich/{{.ProjectRoot}} https://github.com/gleich/{{.ProjectRoot}}/tree/main/{/dir} https://github.com/gleich/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
     />
     <meta http-equiv="refresh" content="0; url=https://pkg.go.dev/github.com/gleich/{{.ProjectName}}">
+    <link rel="icon" href="https://mattglei.ch/favicon.ico">
     <title>{{.ProjectName}}</title>
   </head>
 
