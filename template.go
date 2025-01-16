@@ -24,10 +24,8 @@ var htmlTemplate = template.Must(template.New("gometa").Parse(`<!DOCTYPE html>
     <link rel="icon" href="https://mattglei.ch/favicon.ico">
     <title>{{.ProjectName}}</title>
   </head>
-
    <body>
     <a href="https://github.com/gleich/{{.ProjectRoot}}">github.com/gleich/{{.ProjectRoot}}</a><br>
     <a href="https://github.com/gleich/vanityprox" target="_blank">Proxied by gleich/vanityprox</a>
   </body>
-</html>
-`))
+</html>`))
