@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gleich/lumber/v3"
+	"pkg.mattglei.ch/timber"
 )
 
 func main() {
 	setupLogger()
-	lumber.Info("booted")
+	timber.Info("booted")
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handle)
@@ -21,17 +21,17 @@ func main() {
 	}
 	err := server.ListenAndServe()
 	if err != nil {
-		lumber.Fatal(err, "failed to start server")
+		timber.Fatal(err, "failed to start server")
 	}
 }
 
 func setupLogger() {
 	nytime, err := time.LoadLocation("America/New_York")
 	if err != nil {
-		lumber.Fatal(err, "failed to load new york timezone")
+		timber.Fatal(err, "failed to load new york timezone")
 	}
-	lumber.SetTimezone(nytime)
-	lumber.SetTimeFormat("01/02 03:04:05 PM MST")
+	timber.SetTimezone(nytime)
+	timber.SetTimeFormat("01/02 03:04:05 PM MST")
 }
 
 func handle(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +55,7 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := htmlTemplate.Execute(w, data)
 	if err != nil {
-		lumber.Error(err, "failed to execute HTML template")
+		timber.Error(err, "failed to execute HTML template")
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -65,6 +65,6 @@ func logRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		next.ServeHTTP(w, r)
-		lumber.Done(r.Method, r.URL.Path, time.Since(start))
+		timber.Done(r.Method, r.URL.Path, time.Since(start))
 	})
 }

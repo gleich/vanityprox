@@ -2,12 +2,12 @@ module pkg.mattglei.ch/vanityprox
 
 go 1.23.4
 
-require github.com/gleich/lumber/v3 v3.0.2
+require pkg.mattglei.ch/timber v1.0.0
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/charmbracelet/lipgloss v1.0.0 // indirect
-	github.com/charmbracelet/x/ansi v0.6.0 // indirect
+	github.com/charmbracelet/x/ansi v0.7.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
