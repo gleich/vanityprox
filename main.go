@@ -19,6 +19,8 @@ func main() {
 		Addr:    ":8000",
 		Handler: logRequest(mux),
 	}
+
+	timber.Done("starting server")
 	err := server.ListenAndServe()
 	if err != nil {
 		timber.Fatal(err, "failed to start server")
