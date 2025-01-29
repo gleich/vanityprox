@@ -19,7 +19,7 @@ func main() {
 	logConfig(conf)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", handle(conf))
+	mux.HandleFunc("GET /", handle(conf))
 
 	server := http.Server{
 		Addr:    ":8000",
@@ -85,6 +85,6 @@ func logRequest(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		next.ServeHTTP(w, r)
-		timber.Done(r.Method, r.URL.Path, time.Since(start))
+		timber.Done(r.URL.Path, time.Since(start))
 	})
 }
