@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -57,7 +58,8 @@ func handle(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	err := htmlTemplate.Execute(w, data)
 	if err != nil {
-		timber.Error(err, "failed to execute HTML template")
+		err = fmt.Errorf("%v failed to execute HTML template", err)
+		timber.Error(err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
