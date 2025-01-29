@@ -52,6 +52,7 @@ func readConfig() (config, error) {
 	}
 	conf.SourcePrefix = &sourcePrefix
 
+	timber.Debug(*conf.Host)
 	hostURL, err := url.Parse(*conf.Host)
 	if err != nil {
 		return config{}, fmt.Errorf("%v failed to parse host", err)
@@ -62,10 +63,10 @@ func readConfig() (config, error) {
 }
 
 func logConfig(conf config) {
-	timber.Info("host =", &conf.Host)
-	timber.Info("source prefix =", &conf.SourcePrefix)
+	timber.Info("host =", *conf.Host)
+	timber.Info("source prefix =", *conf.SourcePrefix)
 	if conf.Favicon != "" {
-		timber.Info("favicon =", &conf.Favicon)
+		timber.Info("favicon =", conf.Favicon)
 	}
 	if conf.RootRedirect != "" {
 		timber.Info("root redirect =", conf.RootRedirect)
