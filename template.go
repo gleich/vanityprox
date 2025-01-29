@@ -8,6 +8,7 @@ import (
 type templateData struct {
 	ProjectName string
 	ProjectRoot string
+	Config      config
 }
 
 //go:embed template.html

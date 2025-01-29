@@ -2,7 +2,11 @@ module pkg.mattglei.ch/vanityprox
 
 go 1.23.4
 
-require pkg.mattglei.ch/timber v1.0.0
+require (
+	github.com/caarlos0/env/v11 v11.3.1
+	github.com/joho/godotenv v1.5.1
+	pkg.mattglei.ch/timber v1.0.0
+)
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect

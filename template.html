@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width" />
     <meta
       name="go-import"
-      content="pkg.mattglei.ch/{{.ProjectName}} git https://github.com/gleich/{{.ProjectRoot}}"
+      content="{{.Config.Host}}/{{.ProjectName}} git https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}"
     />
     <meta
       name="go-source"
-      content="pkg.mattglei.ch/{{.ProjectName}} https://github.com/gleich/{{.ProjectRoot}} https://github.com/gleich/{{.ProjectRoot}}/tree/main/{/dir} https://github.com/gleich/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
+      content="{{.Config.Host}}/{{.ProjectName}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/tree/main/{/dir} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
     />
     <meta
       http-equiv="refresh"
-      content="0; url=https://pkg.go.dev/pkg.mattglei.ch/{{.ProjectName}}"
+      content="0; url=https://pkg.go.dev/{{.Config.Host}}/{{.ProjectName}}"
     />
-    <link rel="icon" href="https://mattglei.ch/favicon.ico" />
+    <link rel="icon" href="{{.Config.Favicon}}" />
     <title>{{.ProjectName}}</title>
   </head>
   <body>
-    <a href="https://github.com/gleich/{{.ProjectRoot}}"
-      >github.com/gleich/{{.ProjectRoot}}</a
+    <a href="https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}"
+      >{{.Config.SourcePrefix}}/{{.ProjectRoot}}</a
     ><br />
     <a href="https://github.com/gleich/vanityprox" target="_blank"
       >Proxied by gleich/vanityprox</a
