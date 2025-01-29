@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="go-import"
       content="{{.Config.Host}}/{{.ProjectName}} git https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}"
@@ -18,6 +18,24 @@
     <link rel="icon" href="{{.Config.Favicon}}" />
     <title>{{.ProjectName}}</title>
   </head>
+  <style>
+    * {
+      margin: 0px;
+      padding: 0px;
+      background-color: rgb(28, 31, 33);
+      color: white;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      height: 100vh;
+      font-family: 'arial';
+    }
+  </style>
   <body>
     <a href="https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}"
       >{{.Config.SourcePrefix}}/{{.ProjectRoot}}</a
