@@ -74,6 +74,6 @@ func logConfig(conf config) {
 		timber.Info("  log timezone =", conf.LogTimezone)
 	}
 	if conf.LogTimeFormat != "" {
-		timber.Info("log time format =", conf.LogTimeFormat)
+		timber.Info(" log time format =", conf.LogTimeFormat)
 	}
 }
