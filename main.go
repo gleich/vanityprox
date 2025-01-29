@@ -16,6 +16,7 @@ func main() {
 	}
 
 	setupLogger(conf)
+	logConfig(conf)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handle(conf))

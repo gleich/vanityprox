@@ -9,6 +9,7 @@ import (
 
 	"github.com/caarlos0/env/v11"
 	"github.com/joho/godotenv"
+	"pkg.mattglei.ch/timber"
 )
 
 type config struct {
@@ -58,4 +59,21 @@ func readConfig() (config, error) {
 	conf.Host = &hostURL.Host
 
 	return conf, nil
+}
+
+func logConfig(conf config) {
+	timber.Info("host =", &conf.Host)
+	timber.Info("source prefix =", &conf.SourcePrefix)
+	if conf.Favicon != "" {
+		timber.Info("favicon =", &conf.Favicon)
+	}
+	if conf.RootRedirect != "" {
+		timber.Info("root redirect =", conf.RootRedirect)
+	}
+	if conf.LogTimezone != "" {
+		timber.Info("log timezone =", conf.LogTimezone)
+	}
+	if conf.LogTimeFormat != "" {
+		timber.Info("log time format =", conf.LogTimeFormat)
+	}
 }
