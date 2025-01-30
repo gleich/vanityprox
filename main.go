@@ -70,7 +70,8 @@ func handle(conf config) http.HandlerFunc {
 		root := strings.Split(name, "/")[0]
 
 		data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
-		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Header().Set("content-type", "text/html; charset=utf-8")
+		w.Header().Set("x-powered-by", "vanityprox")
 		err := htmlTemplate.Execute(w, data)
 		if err != nil {
 			err = fmt.Errorf("%v failed to execute HTML template", err)
