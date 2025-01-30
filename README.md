@@ -18,7 +18,7 @@ docker run -p 8000:8000 \
   ghcr.io/gleich/vanityprox
 ```
 
-This will then start the server on port `8000`. Its that easy!
+This will then start the server on port `8000`. It's that easy!
 
 As you can see vanityprox is configured with environment variables. Below is details on what all of the environment variables mean.
 
@@ -26,10 +26,10 @@ As you can see vanityprox is configured with environment variables. Below is det
 
 - `VANITYPROX_HOST`
   - Host vanity URL that the server will get requests from.
-  - Example: `https://pkg.matglei.ch`
+  - Example: `https://pkg.mattglei.ch`
   - **REQUIRED**
 - `VANITYPROX_SOURCE_PREFIX`
-  - Prefix for where all of the code for the go modules is stored. If you're using GitHub it should simply just be the name of the GitHub account/organization.
+  - Prefix for where all of the code for the go modules is stored. If you're using GitHub it should simply just be the URL of the GitHub account/organization.
   - Example: `https://github.com/gleich`
   - **REQUIRED**
 - `VANITYPROX_ROOT_REDIRECT`
@@ -41,9 +41,9 @@ As you can see vanityprox is configured with environment variables. Below is det
   - Example: `America/New_York`
   - **OPTIONAL**
 - `VANITYPROX_LOG_TIME_FORMAT`
-  - Format that should be used for outputting the logs. Used [golang's built in time formatting system](https://go.dev/src/time/format.go).
+  - Format that should be used for outputting the logs. Uses [golang's built in time formatting system](https://go.dev/src/time/format.go).
   - Example: `01/02 03:04:05 PM MST`
   - **OPTIONAL**
 - `VANITYPROX_FAVICON`
-  - URL for a favicon of your choosing. This will be displayed in the HTML that gets returned from the server.
+  - URL for a favicon. This will be displayed in the HTML that gets returned from the server.
   - **OPTIONAL**
