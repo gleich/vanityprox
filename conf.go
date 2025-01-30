@@ -62,16 +62,16 @@ func readConfig() (config, error) {
 }
 
 func logConfig(conf config) {
-	timber.Info("          host =", *conf.Host)
-	timber.Info(" source prefix =", *conf.SourcePrefix)
+	timber.Info("           host =", *conf.Host)
+	timber.Info("  source prefix =", *conf.SourcePrefix)
 	if conf.Favicon != "" {
-		timber.Info("       favicon =", conf.Favicon)
+		timber.Info("        favicon =", conf.Favicon)
 	}
 	if conf.RootRedirect != "" {
-		timber.Info(" root redirect =", conf.RootRedirect)
+		timber.Info("  root redirect =", conf.RootRedirect)
 	}
 	if conf.LogTimezone != "" {
-		timber.Info("  log timezone =", conf.LogTimezone)
+		timber.Info("   log timezone =", conf.LogTimezone)
 	}
 	if conf.LogTimeFormat != "" {
 		timber.Info("log time format =", conf.LogTimeFormat)
