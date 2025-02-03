@@ -5,7 +5,7 @@ go 1.23.5
 require (
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/joho/godotenv v1.5.1
-	pkg.mattglei.ch/timber v1.0.1
+	pkg.mattglei.ch/timber v1.1.0
 )
 
 require (

@@ -26,3 +26,5 @@ golang.org/x/sys v0.29.0 h1:TPYlXGxvx1MGTn2GiZDhnjPA9wZzZeGKHHmKhHYvgaU=
 golang.org/x/sys v0.29.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
 pkg.mattglei.ch/timber v1.0.1 h1:jJuvLxTCe1lwC51Q+N55Twyv6qIxlbdyNPFqcJTIbX0=
 pkg.mattglei.ch/timber v1.0.1/go.mod h1:Go9fz7dL27Oo7t3ksPAthw6JzCJmUMdSiEbqZhKDxLc=
+pkg.mattglei.ch/timber v1.1.0 h1:+WW9f5gwVa7bwMkffVGu1bJINhBwt89HeZi+xoskGck=
+pkg.mattglei.ch/timber v1.1.0/go.mod h1:ULggc0zbdfxuU8rDyFhRIaFUtnTLkGQKKvZ7RDgdF4U=
