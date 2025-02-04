@@ -48,7 +48,7 @@ func setupLogger(conf config) {
 
 func handle(conf config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("x-powered-by", "vanityprox")
+		w.Header().Set("x-powered-by", "vanityprox [https://github.com/gleich/vanityprox]")
 		if strings.HasSuffix(r.URL.Path, "/info/refs") {
 			http.Error(w, "This server does not serve Git repositories.", http.StatusNotFound)
 			return
