@@ -48,6 +48,7 @@ func setupLogger(conf config) {
 
 func handle(conf config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("x-powered-by", "vanityprox")
 		if strings.HasSuffix(r.URL.Path, "/info/refs") {
 			http.Error(w, "This server does not serve Git repositories.", http.StatusNotFound)
 			return
@@ -68,9 +69,6 @@ func handle(conf config) http.HandlerFunc {
 			return
 		}
 		root := strings.Split(name, "/")[0]
-
-		w.Header().Set("content-type", "text/html; charset=utf-8")
-		w.Header().Set("x-powered-by", "vanityprox")
 
 		data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
 		err := htmlTemplate.Execute(w, data)
