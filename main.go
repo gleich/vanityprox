@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	"pkg.mattglei.ch/timber"
+	"go.mattglei.ch/timber"
 )
 
 func main() {

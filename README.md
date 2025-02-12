@@ -3,9 +3,9 @@
 [![build](https://github.com/gleich/vanityprox/actions/workflows/build.yml/badge.svg)](https://github.com/gleich/vanityprox/actions/workflows/build.yml)
 [![deploy](https://github.com/gleich/vanityprox/actions/workflows/deploy.yml/badge.svg)](https://github.com/gleich/vanityprox/actions/workflows/deploy.yml)
 [![lint](https://github.com/gleich/vanityprox/actions/workflows/lint.yml/badge.svg)](https://github.com/gleich/vanityprox/actions/workflows/lint.yml)
-[![go report card](https://goreportcard.com/badge/pkg.mattglei.ch/vanityprox)](https://goreportcard.com/report/pkg.mattglei.ch/vanityprox)
+[![go report card](https://goreportcard.com/badge/go.mattglei.ch/vanityprox)](https://goreportcard.com/report/go.mattglei.ch/vanityprox)
 
-A simple webserver that allows for custom vanity URLs for go modules. Allows for go modules to be installed like `go get pkg.mattglei.ch/timber` instead of `go get github.com/gleich/timber`.
+A simple webserver that allows for custom vanity URLs for go modules. Allows for go modules to be installed like `go get go.mattglei.ch/timber` instead of `go get github.com/gleich/timber`.
 
 ## How to use
 
@@ -13,7 +13,7 @@ Want to use vanityprox for your own domain and GitHub account/organization? Simp
 
 ```bash
 docker run -p 8000:8000 \
-  -e VANITYPROX_HOST="https://pkg.mattglei.ch" \
+  -e VANITYPROX_HOST="https://go.mattglei.ch" \
   -e VANITYPROX_SOURCE_PREFIX="https://github.com/gleich" \
   ghcr.io/gleich/vanityprox
 ```
@@ -26,7 +26,7 @@ As you can see vanityprox is configured with environment variables. Below is det
 
 - `VANITYPROX_HOST`
   - Host vanity URL that the server will get requests from.
-  - Example: `https://pkg.mattglei.ch`
+  - Example: `https://go.mattglei.ch`
   - **REQUIRED**
 - `VANITYPROX_SOURCE_PREFIX`
   - Prefix for where all of the code for the go modules is stored. If you're using GitHub it should simply just be the URL of the GitHub account/organization.

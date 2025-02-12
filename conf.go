@@ -9,7 +9,7 @@ import (
 
 	"github.com/caarlos0/env/v11"
 	"github.com/joho/godotenv"
-	"pkg.mattglei.ch/timber"
+	"go.mattglei.ch/timber"
 )
 
 type config struct {
