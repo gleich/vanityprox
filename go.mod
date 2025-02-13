@@ -5,7 +5,7 @@ go 1.24
 require (
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/joho/godotenv v1.5.1
-	go.mattglei.ch/timber v1.1.1
+	go.mattglei.ch/timber v1.1.2
 )
 
 require (
@@ -17,5 +17,5 @@ require (
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	golang.org/x/sys v0.29.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
 )
