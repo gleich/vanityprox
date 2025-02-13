@@ -46,11 +46,13 @@ func setupLogger(conf config) {
 	}
 }
 
+const NOT_FOUND_ERROR = "requested resource not found"
+
 func handle(conf config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("x-powered-by", "vanityprox [https://github.com/gleich/vanityprox]")
 		if strings.HasSuffix(r.URL.Path, "/info/refs") {
-			http.Error(w, "This server does not serve Git repositories.", http.StatusNotFound)
+			http.Error(w, "this server does not serve git repositories", http.StatusNotFound)
 			return
 		}
 
@@ -60,12 +62,12 @@ func handle(conf config) http.HandlerFunc {
 				http.Redirect(w, r, conf.RootRedirect, http.StatusMovedPermanently)
 				return
 			} else {
-				http.Error(w, "Not found.", http.StatusNotFound)
+				http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
 				return
 			}
 		}
 		if name == "favicon.ico" {
-			http.Error(w, "Not found.", http.StatusNotFound)
+			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
 			return
 		}
 		root := strings.Split(name, "/")[0]
