@@ -39,10 +39,10 @@ func setupLogger(conf config) {
 		if err != nil {
 			timber.Fatal(err, "failed to load timezone:", conf.LogTimezone)
 		}
-		timber.SetTimezone(timezone)
+		timber.Timezone(timezone)
 	}
 	if conf.LogTimeFormat != "" {
-		timber.SetTimeFormat(conf.LogTimeFormat)
+		timber.TimeFormat(conf.LogTimeFormat)
 	}
 }
 
