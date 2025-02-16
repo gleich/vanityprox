@@ -75,7 +75,7 @@ func handle(conf config) http.HandlerFunc {
 		data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
 		err := htmlTemplate.Execute(w, data)
 		if err != nil {
-			err = fmt.Errorf("%v failed to execute HTML template", err)
+			err = fmt.Errorf("%w failed to execute HTML template", err)
 			timber.Error(err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return

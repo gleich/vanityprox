@@ -25,13 +25,13 @@ func readConfig() (config, error) {
 	if _, err := os.Stat(".env"); !errors.Is(err, fs.ErrNotExist) {
 		err = godotenv.Load()
 		if err != nil {
-			return config{}, fmt.Errorf("%v failed to read from .env file", err)
+			return config{}, fmt.Errorf("%w failed to read from .env file", err)
 		}
 	}
 
 	conf, err := env.ParseAs[config]()
 	if err != nil {
-		return config{}, fmt.Errorf("%v failed to parse config from environment variables", err)
+		return config{}, fmt.Errorf("%w failed to parse config from environment variables", err)
 	}
 
 	if conf.Host == nil {
@@ -44,17 +44,17 @@ func readConfig() (config, error) {
 	// ensure that source prefix is formatted properly
 	sourceURL, err := url.Parse(*conf.SourcePrefix)
 	if err != nil {
-		return config{}, fmt.Errorf("%v failed to parse source prefix URL", err)
+		return config{}, fmt.Errorf("%w failed to parse source prefix URL", err)
 	}
 	sourcePrefix, err := url.JoinPath(sourceURL.Host, sourceURL.Path)
 	if err != nil {
-		return config{}, fmt.Errorf("%v failed to create source prefix from URL", err)
+		return config{}, fmt.Errorf("%w failed to create source prefix from URL", err)
 	}
 	conf.SourcePrefix = &sourcePrefix
 
 	hostURL, err := url.Parse(*conf.Host)
 	if err != nil {
-		return config{}, fmt.Errorf("%v failed to parse host", err)
+		return config{}, fmt.Errorf("%w failed to parse host", err)
 	}
 	conf.Host = &hostURL.Host
 
