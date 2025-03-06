@@ -1,12 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"go.mattglei.ch/timber"
+)
+
+var (
+	cache      map[string][]byte = map[string][]byte{}
+	cacheMutex sync.RWMutex
 )
 
 func main() {
@@ -70,15 +77,42 @@ func handle(conf config) http.HandlerFunc {
 			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
 			return
 		}
-		root := strings.Split(name, "/")[0]
 
+		cacheMutex.RLock()
+		cachedTemplate, found := cache[name]
+		cacheMutex.RUnlock()
+		if found {
+			_, err := w.Write(cachedTemplate)
+			if err != nil {
+				err = fmt.Errorf("%w failed to write cached HTML template", err)
+				timber.Error(err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			return
+		}
+
+		root := strings.Split(name, "/")[0]
 		data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
-		err := htmlTemplate.Execute(w, data)
+		var buf bytes.Buffer
+		err := htmlTemplate.Execute(&buf, data)
 		if err != nil {
 			err = fmt.Errorf("%w failed to execute HTML template", err)
 			timber.Error(err)
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
+		}
+		result := buf.Bytes()
+
+		cacheMutex.Lock()
+		cache[name] = result
+		cacheMutex.Unlock()
+
+		_, err = w.Write(result)
+		if err != nil {
+			err = fmt.Errorf("%w failed to write new html template to response", err)
+			timber.Error(err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	}
 }
