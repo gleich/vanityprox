@@ -103,6 +103,11 @@ func logRequest(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(wrapped, r)
-		timber.Done(wrapped.statusCode, r.URL.Path, time.Since(start))
+		timber.Done(
+			wrapped.statusCode,
+			fmt.Sprintf("[%s]", strings.ToLower(http.StatusText(wrapped.statusCode))),
+			r.URL.Path,
+			time.Since(start),
+		)
 	})
 }
