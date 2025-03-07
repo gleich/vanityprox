@@ -11,6 +11,8 @@ import (
 	"go.mattglei.ch/timber"
 )
 
+const port = ":8000"
+
 var (
 	cache      map[string][]byte = map[string][]byte{}
 	cacheMutex sync.RWMutex
@@ -29,11 +31,11 @@ func main() {
 	mux.HandleFunc("GET /", handle(conf))
 
 	server := http.Server{
-		Addr:    ":8000",
+		Addr:    port,
 		Handler: logRequest(mux),
 	}
 
-	timber.Done("starting server on 0.0.0.0:8000")
+	timber.Done(fmt.Sprintf("starting server on 0.0.0.0%s", port))
 	err = server.ListenAndServe()
 	if err != nil {
 		timber.Fatal(err, "failed to start server")
