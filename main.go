@@ -92,6 +92,7 @@ func handle(conf config) http.HandlerFunc {
 			return
 		}
 
+		w.Header().Set("Cache-Control", "public, max-age=3600")
 		if resp.StatusCode == http.StatusOK {
 			data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
 			var buf bytes.Buffer
@@ -102,6 +103,7 @@ func handle(conf config) http.HandlerFunc {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+
 			_, err = w.Write(buf.Bytes())
 			if err != nil {
 				err = fmt.Errorf("%w failed to write new html template to response", err)
