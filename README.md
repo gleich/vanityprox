@@ -33,7 +33,7 @@ As you can see vanityprox is configured with environment variables. Below is det
   - Example: `https://github.com/gleich`
   - **REQUIRED**
 - `VANITYPROX_ROOT_REDIRECT`
-  - If a request is made to GET / where should the server send the user? Set this environment variable to have them be redirected (via a 301 permanent redirect) to the given URL. If no URL is supplied then it simply will just return a 404 error when something hits GET /.
+  - If a request is made to GET / where should the server send the user? Set this environment variable to have them be redirected (via a 308 permanent redirect) to the given URL. If no URL is supplied then it simply will just return a 404 error when something hits GET /.
   - Example: `https://github.com/gleich/vanityprox`
   - **OPTIONAL**
 - `VANITYPROX_LOG_TIMEZONE`

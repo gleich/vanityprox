@@ -68,7 +68,7 @@ func handle(conf config) http.HandlerFunc {
 		name := strings.TrimPrefix(r.URL.Path, "/")
 		if name == "" {
 			if conf.RootRedirect != "" {
-				http.Redirect(w, r, conf.RootRedirect, http.StatusMovedPermanently)
+				http.Redirect(w, r, conf.RootRedirect, http.StatusPermanentRedirect)
 				return
 			} else {
 				http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
