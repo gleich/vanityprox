@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"sync"
 	"time"
 
 	"go.mattglei.ch/timber"
@@ -13,10 +12,12 @@ import (
 
 const port = ":8000"
 
-var (
-	cache      map[string][]byte = map[string][]byte{}
-	cacheMutex sync.RWMutex
-)
+var client = http.Client{
+	Timeout: 10 * time.Second,
+	CheckRedirect: func(req *http.Request, via []*http.Request) error {
+		return http.ErrUseLastResponse
+	},
+}
 
 func main() {
 	conf, err := readConfig()
@@ -80,41 +81,35 @@ func handle(conf config) http.HandlerFunc {
 			return
 		}
 
-		cacheMutex.RLock()
-		cachedTemplate, found := cache[name]
-		cacheMutex.RUnlock()
-		if found {
-			_, err := w.Write(cachedTemplate)
+		// check to make sure that requested resource actually exists
+		root := strings.Split(name, "/")[0]
+		repoURL := fmt.Sprintf("https://%s/%s", conf.SourcePrefix, root)
+		resp, err := client.Head(repoURL)
+		if err != nil {
+			err = fmt.Errorf("%w failed to make HEAD request to %s", err, repoURL)
+			timber.Error(err)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if resp.StatusCode == http.StatusOK {
+			data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
+			var buf bytes.Buffer
+			err = htmlTemplate.Execute(&buf, data)
 			if err != nil {
-				err = fmt.Errorf("%w failed to write cached HTML template", err)
+				err = fmt.Errorf("%w failed to execute HTML template", err)
 				timber.Error(err)
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-			return
-		}
-
-		root := strings.Split(name, "/")[0]
-		data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
-		var buf bytes.Buffer
-		err := htmlTemplate.Execute(&buf, data)
-		if err != nil {
-			err = fmt.Errorf("%w failed to execute HTML template", err)
-			timber.Error(err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		result := buf.Bytes()
-
-		cacheMutex.Lock()
-		cache[name] = result
-		cacheMutex.Unlock()
-
-		_, err = w.Write(result)
-		if err != nil {
-			err = fmt.Errorf("%w failed to write new html template to response", err)
-			timber.Error(err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			_, err = w.Write(buf.Bytes())
+			if err != nil {
+				err = fmt.Errorf("%w failed to write new html template to response", err)
+				timber.Error(err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		} else {
+			http.Error(w, resp.Status, resp.StatusCode)
 		}
 	}
 }
