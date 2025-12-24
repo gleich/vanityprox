@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -27,13 +26,13 @@ func logRequest(next http.Handler) http.Handler {
 
 		wrapped := &wrappedWriter{
 			ResponseWriter: w,
-			statusCode:     http.StatusOK,
 		}
 
 		next.ServeHTTP(wrapped, r)
-		timber.Done(
+		timber.Donef(
+			"%d [%s] %s %s",
 			wrapped.statusCode,
-			fmt.Sprintf("[%s]", strings.ToLower(http.StatusText(wrapped.statusCode))),
+			strings.ToLower(http.StatusText(wrapped.statusCode)),
 			r.URL.Path,
 			time.Since(start),
 		)

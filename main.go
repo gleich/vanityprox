@@ -36,7 +36,7 @@ func main() {
 		Handler: logRequest(mux),
 	}
 
-	timber.Done(fmt.Sprintf("starting server on 0.0.0.0%s", port))
+	timber.Donef("starting server on 0.0.0.0%s", port)
 	err = server.ListenAndServe()
 	if err != nil {
 		timber.Fatal(err, "failed to start server")
