@@ -113,6 +113,5 @@ func handle(conf config) http.HandlerFunc {
 		} else {
 			http.Error(w, resp.Status, resp.StatusCode)
 		}
-		w.WriteHeader(http.StatusOK)
 	}
 }

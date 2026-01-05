@@ -26,6 +26,7 @@ func logRequest(next http.Handler) http.Handler {
 
 		wrapped := &wrappedWriter{
 			ResponseWriter: w,
+			statusCode:     http.StatusOK,
 		}
 
 		next.ServeHTTP(wrapped, r)
