@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/caarlos0/env/v11 v11.3.1
 	github.com/joho/godotenv v1.5.1
-	go.mattglei.ch/timber v1.6.0
+	go.mattglei.ch/timber v1.6.1
 )
 
 require (
@@ -16,7 +16,7 @@ require (
 	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
 	github.com/charmbracelet/x/term v0.2.2 // indirect
 	github.com/clipperhouse/displaywidth v0.10.0 // indirect
-	github.com/clipperhouse/uax29/v2 v2.6.0 // indirect
+	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.19 // indirect
