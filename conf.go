@@ -13,35 +13,35 @@ import (
 )
 
 type config struct {
-	Host          string `env:"HOST,required"`          // required
-	SourcePrefix  string `env:"SOURCE_PREFIX,required"` // required
-	Favicon       string `env:"FAVICON"`                // optional
-	RootRedirect  string `env:"ROOT_REDIRECT"`          // optional
-	LogTimezone   string `env:"LOG_TIMEZONE"`           // optional
-	LogTimeFormat string `env:"LOG_TIME_FORMAT"`        // optional
+	Host          string `env:"HOST,required"`
+	SourcePrefix  string `env:"SOURCE_PREFIX,required"`
+	Favicon       string `env:"FAVICON"`
+	RootRedirect  string `env:"ROOT_REDIRECT"`
+	LogTimezone   string `env:"LOG_TIMEZONE"`
+	LogTimeFormat string `env:"LOG_TIME_FORMAT"`
 }
 
 func readConfig() (config, error) {
 	if _, err := os.Stat(".env"); !errors.Is(err, fs.ErrNotExist) {
 		err = godotenv.Load()
 		if err != nil {
-			return config{}, fmt.Errorf("%w failed to read from .env file", err)
+			return config{}, fmt.Errorf("reading .env file: %w", err)
 		}
 	}
 
 	conf, err := env.ParseAsWithOptions[config](env.Options{Prefix: "VANITYPROX_"})
 	if err != nil {
-		return config{}, fmt.Errorf("%w failed to parse config from environment variables", err)
+		return config{}, fmt.Errorf("parsing config from environment variables: %w", err)
 	}
 
 	// ensure that source prefix is formatted properly
 	sourceURL, err := url.Parse(conf.SourcePrefix)
 	if err != nil {
-		return config{}, fmt.Errorf("%w failed to parse source prefix URL", err)
+		return config{}, fmt.Errorf("parsing source prefix URL: %w", err)
 	}
 	sourcePrefix, err := url.JoinPath(sourceURL.Host, sourceURL.Path)
 	if err != nil {
-		return config{}, fmt.Errorf("%w failed to create source prefix from URL", err)
+		return config{}, fmt.Errorf("creating source prefix from URL: %w", err)
 	}
 	conf.SourcePrefix = sourcePrefix
 
@@ -54,19 +54,19 @@ func readConfig() (config, error) {
 	return conf, nil
 }
 
-func logConfig(conf config) {
-	timber.Info("           host =", conf.Host)
-	timber.Info("  source prefix =", conf.SourcePrefix)
-	if conf.Favicon != "" {
-		timber.Info("        favicon =", conf.Favicon)
+func (c config) log() {
+	timber.Info("           host =", c.Host)
+	timber.Info("  source prefix =", c.SourcePrefix)
+	if c.Favicon != "" {
+		timber.Info("        favicon =", c.Favicon)
 	}
-	if conf.RootRedirect != "" {
-		timber.Info("  root redirect =", conf.RootRedirect)
+	if c.RootRedirect != "" {
+		timber.Info("  root redirect =", c.RootRedirect)
 	}
-	if conf.LogTimezone != "" {
-		timber.Info("   log timezone =", conf.LogTimezone)
+	if c.LogTimezone != "" {
+		timber.Info("   log timezone =", c.LogTimezone)
 	}
-	if conf.LogTimeFormat != "" {
-		timber.Info("log time format =", conf.LogTimeFormat)
+	if c.LogTimeFormat != "" {
+		timber.Info("log time format =", c.LogTimeFormat)
 	}
 }

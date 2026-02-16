@@ -26,7 +26,7 @@ func main() {
 	}
 
 	setupLogger(conf)
-	logConfig(conf)
+	conf.log()
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /", handle(conf))
@@ -86,9 +86,7 @@ func handle(conf config) http.HandlerFunc {
 		repoURL := fmt.Sprintf("https://%s/%s", conf.SourcePrefix, root)
 		resp, err := client.Head(repoURL)
 		if err != nil {
-			err = fmt.Errorf("%w failed to make HEAD request to %s", err, repoURL)
-			timber.Error(err)
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			internalServerError(w, fmt.Errorf("checking head status: %w", err))
 			return
 		}
 
@@ -98,20 +96,23 @@ func handle(conf config) http.HandlerFunc {
 			var buf bytes.Buffer
 			err = htmlTemplate.Execute(&buf, data)
 			if err != nil {
-				err = fmt.Errorf("%w failed to execute HTML template", err)
-				timber.Error(err)
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
+				internalServerError(w, fmt.Errorf("%w failed to execute HTML template", err))
 			}
 
 			_, err = w.Write(buf.Bytes())
 			if err != nil {
-				err = fmt.Errorf("%w failed to write new html template to response", err)
-				timber.Error(err)
-				http.Error(w, err.Error(), http.StatusInternalServerError)
+				internalServerError(
+					w,
+					fmt.Errorf("%w failed to write new html template to response", err),
+				)
 			}
 		} else {
 			http.Error(w, resp.Status, resp.StatusCode)
 		}
 	}
+}
+
+func internalServerError(w http.ResponseWriter, err error) {
+	timber.Error(err)
+	http.Error(w, err.Error(), http.StatusInternalServerError)
 }
