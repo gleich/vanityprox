@@ -13,13 +13,6 @@ import (
 
 const port = ":8000"
 
-var client = http.Client{
-	Timeout: 10 * time.Second,
-	CheckRedirect: func(req *http.Request, via []*http.Request) error {
-		return http.ErrUseLastResponse
-	},
-}
-
 func main() {
 	conf, err := readConfig()
 	if err != nil {
