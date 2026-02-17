@@ -3,8 +3,7 @@ module go.mattglei.ch/vanityprox
 go 1.26.0
 
 require (
-	github.com/caarlos0/env/v11 v11.3.1
-	github.com/joho/godotenv v1.5.1
+	github.com/pelletier/go-toml/v2 v2.2.4
 	go.mattglei.ch/timber v1.6.1
 )
 

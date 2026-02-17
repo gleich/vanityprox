@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"net/http"
+	"slices"
 	"strings"
 	"time"
 
@@ -44,19 +45,21 @@ func main() {
 }
 
 func setupLogger(conf config) {
-	if conf.LogTimezone != "" {
-		timezone, err := time.LoadLocation(conf.LogTimezone)
+	timezone := conf.Logs.Timezone
+	if timezone != "" {
+		location, err := time.LoadLocation(timezone)
 		if err != nil {
-			timber.Fatal(err, "failed to load timezone:", conf.LogTimezone)
+			timber.Fatal(err, "failed to load timezone:", timezone)
 		}
-		timber.Timezone(timezone)
+		timber.Timezone(location)
 	}
-	if conf.LogTimeFormat != "" {
-		timber.TimeFormat(conf.LogTimeFormat)
+	format := conf.Logs.TimeFormat
+	if format != "" {
+		timber.TimeFormat(format)
 	}
 }
 
-const NOT_FOUND_ERROR = "requested resource not found"
+const NOT_FOUND_ERROR = "package not found"
 
 func handle(conf config) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -83,18 +86,13 @@ func handle(conf config) http.HandlerFunc {
 
 		// check to make sure that requested resource actually exists
 		root := strings.Split(name, "/")[0]
-		repoURL := fmt.Sprintf("https://%s/%s", conf.SourcePrefix, root)
-		resp, err := client.Head(repoURL)
-		if err != nil {
-			internalServerError(w, fmt.Errorf("checking head status: %w", err))
-			return
-		}
 
 		w.Header().Set("Cache-Control", "public, max-age=3600")
-		if resp.StatusCode == http.StatusOK {
+
+		if slices.Contains(conf.Packages, root) {
 			data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
 			var buf bytes.Buffer
-			err = htmlTemplate.Execute(&buf, data)
+			err := htmlTemplate.Execute(&buf, data)
 			if err != nil {
 				internalServerError(w, fmt.Errorf("%w failed to execute HTML template", err))
 			}
@@ -107,7 +105,7 @@ func handle(conf config) http.HandlerFunc {
 				)
 			}
 		} else {
-			http.Error(w, resp.Status, resp.StatusCode)
+			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
 		}
 	}
 }
