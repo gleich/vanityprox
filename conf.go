@@ -13,7 +13,6 @@ type config struct {
 	Host         string `toml:"host"`
 	SourcePrefix string `toml:"source_prefix"`
 	Favicon      string `toml:"favicon"`
-	RootRedirect string `toml:"root_redirect"`
 	Logs         struct {
 		Timezone   string `toml:"timezone"`
 		TimeFormat string `toml:"time_format"`
@@ -58,9 +57,6 @@ func (c config) log() {
 	timber.Info("  source prefix =", c.SourcePrefix)
 	if c.Favicon != "" {
 		timber.Info("        favicon =", c.Favicon)
-	}
-	if c.RootRedirect != "" {
-		timber.Info("  root redirect =", c.RootRedirect)
 	}
 	if c.Logs.Timezone != "" {
 		timber.Info("   log timezone =", c.Logs.Timezone)
