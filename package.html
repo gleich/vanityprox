@@ -11,38 +11,34 @@
       name="go-source"
       content="{{.Config.Host}}/{{.ProjectName}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/tree/main/{/dir} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
     />
-    <meta
+    <!-- <meta
       http-equiv="refresh"
       content="0; url=https://pkg.go.dev/{{.Config.Host}}/{{.ProjectName}}"
-    />
+    /> -->
     <link rel="icon" href="{{.Config.Favicon}}" />
+    <link rel="stylesheet" href="/styles.css" />
     <title>{{.ProjectName}}</title>
   </head>
   <style>
-    * {
-      margin: 0px;
-      padding: 0px;
-      background-color: rgb(28, 31, 33);
-      color: white;
-    }
-
     body {
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 10px;
       height: 100vh;
-      font-family: 'arial';
     }
 
     svg {
       width: 70px;
-      height: 70px;
+      height: auto;
+    }
+
+    .m {
+      fill: var(--foreground);
     }
 
     .lines {
-      stroke: white;
+      stroke: var(--foreground);
       animation: spin infinite 20s linear;
       transform-origin: 250px 250px;
       transform-box: view-box;
@@ -73,7 +69,7 @@
         />
         <path
           d="m198 241 1-3a99 99 0 0 1 4-12c2-5 6-8 10-8 3 0 6 1 8 4 2 2 4 4 4 8 6-8 13-12 21-12 4 0 7 1 10 3s4 6 5 10c6-8 13-13 21-13 5 0 8 2 11 4s5 6 5 11c0 6-3 17-9 32l-3 11c0 3 1 4 3 4 6 0 10-6 14-18l1-2h1l2 1v3a47 47 0 0 1-6 12l-5 5c-2 2-4 3-7 3s-6-2-8-4-3-5-3-8l2-9c6-16 9-27 9-32 0-6-2-9-7-9-7 0-14 5-20 15l-4 10a125 125 0 0 0-2 10l-6 23c-1 2-2 4-5 4l-3-2-1-2v-2l10-38 1-9c0-6-2-9-7-9-7 0-14 5-20 15l-3 10-2 5-1 5-5 23c-1 2-3 4-6 4l-3-2-1-2 1-2 11-43 1-8c0-4-2-5-4-5s-4 1-6 4l-4 13-1 3h-2l-2-1Z"
-          style="fill: white"
+          class="m"
         />
       </svg>
     </div>

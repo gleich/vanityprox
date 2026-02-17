@@ -30,12 +30,14 @@ func logRequest(next http.Handler) http.Handler {
 		}
 
 		next.ServeHTTP(wrapped, r)
-		timber.Donef(
-			"%d [%s] %s %s",
-			wrapped.statusCode,
-			strings.ToLower(http.StatusText(wrapped.statusCode)),
-			r.URL.Path,
-			time.Since(start),
-		)
+		if !strings.HasPrefix(r.URL.Path, "/static/") {
+			timber.Donef(
+				"%d [%s] %s %s",
+				wrapped.statusCode,
+				strings.ToLower(http.StatusText(wrapped.statusCode)),
+				r.URL.Path,
+				time.Since(start),
+			)
+		}
 	})
 }

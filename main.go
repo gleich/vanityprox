@@ -1,10 +1,7 @@
 package main
 
 import (
-	"bytes"
-	"fmt"
 	"net/http"
-	"slices"
 	"strings"
 	"time"
 
@@ -24,6 +21,10 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("GET /", handle(conf))
+
+	mux.HandleFunc("GET /styles.css", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "styles.css")
+	})
 
 	server := http.Server{
 		Addr:    port,
@@ -64,42 +65,15 @@ func handle(conf config) http.HandlerFunc {
 
 		name := strings.TrimPrefix(r.URL.Path, "/")
 		if name == "" {
-			if conf.RootRedirect != "" {
-				http.Redirect(w, r, conf.RootRedirect, http.StatusPermanentRedirect)
-				return
-			} else {
-				http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
-				return
-			}
+			renderIndexHTML(conf, w)
+			return
 		}
 		if name == "favicon.ico" {
 			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
 			return
 		}
 
-		// check to make sure that requested resource actually exists
-		root := strings.Split(name, "/")[0]
-
-		w.Header().Set("Cache-Control", "public, max-age=3600")
-
-		if slices.Contains(conf.Packages, root) {
-			data := templateData{ProjectName: name, ProjectRoot: root, Config: conf}
-			var buf bytes.Buffer
-			err := htmlTemplate.Execute(&buf, data)
-			if err != nil {
-				internalServerError(w, fmt.Errorf("%w failed to execute HTML template", err))
-			}
-
-			_, err = w.Write(buf.Bytes())
-			if err != nil {
-				internalServerError(
-					w,
-					fmt.Errorf("%w failed to write new html template to response", err),
-				)
-			}
-		} else {
-			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
-		}
+		renderPackageHTML(conf, w, r)
 	}
 }
 
