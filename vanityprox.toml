@@ -1,6 +1,7 @@
 host = "https://go.mattglei.ch"
 source_prefix = "https://github.com/gleich"
 favicon = "https://mattglei.ch/favicon.ico"
+root_redirect = "https://github.com/gleich/vanityprox"
 
 packages = [
     "timber",
