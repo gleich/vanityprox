@@ -39,14 +39,15 @@ func readConfig() (config, error) {
 	if err != nil {
 		return config{}, fmt.Errorf("parsing source prefix URL: %w", err)
 	}
-	_, err = url.JoinPath(sourceURL.Host, sourceURL.Path)
+	conf.SourcePrefix, err = url.JoinPath(sourceURL.Host, sourceURL.Path)
 	if err != nil {
 		return config{}, fmt.Errorf("creating source prefix from URL: %w", err)
 	}
-	_, err = url.Parse(conf.Host)
+	hostURL, err := url.Parse(conf.Host)
 	if err != nil {
 		return config{}, fmt.Errorf("%w failed to parse host", err)
 	}
+	conf.Host = hostURL.Host
 
 	return conf, nil
 }
