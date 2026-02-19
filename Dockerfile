@@ -12,7 +12,7 @@ RUN apk update && apk add --no-cache ca-certificates=20250911-r0 tzdata=2025c-r0
 
 WORKDIR /src
 COPY --from=build /bin/go.mattglei.ch /bin/go.mattglei.ch
-COPY --from=build /src/go.mattglei.ch.toml .
+COPY --from=build /src/config.toml .
 COPY --from=build /src/styles.css .
 
 CMD ["/bin/go.mattglei.ch"]
