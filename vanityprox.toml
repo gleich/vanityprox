@@ -1,15 +1,11 @@
 host = "https://go.mattglei.ch"
 source_prefix = "https://github.com/gleich"
-favicon = "https://mattglei.ch/favicon.ico"
 
 packages = [
     "timber",
     "lcp",
     "vanityprox",
     "ritcs",
-    "terminal"
+    "terminal",
+    "scripts"
 ]
-
-[logs]
-timezone = "America/New_York"
-time_format = "01/02 03:04:05 PM MST"

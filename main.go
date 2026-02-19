@@ -1,83 +1,48 @@
 package main
 
 import (
-	"net/http"
-	"strings"
 	"time"
 
 	"go.mattglei.ch/timber"
+	"go.mattglei.ch/vanityprox/internal/api"
+	"go.mattglei.ch/vanityprox/internal/conf"
+	"go.mattglei.ch/vanityprox/internal/github"
+	"go.mattglei.ch/vanityprox/internal/pkg"
+	"go.mattglei.ch/vanityprox/internal/secrets"
 )
 
-const port = ":8000"
-
 func main() {
-	conf, err := readConfig()
+	ny, err := time.LoadLocation("America/New_York")
+	if err != nil {
+		timber.Fatal(err, "failed to read new york time location")
+	}
+	timber.Timezone(ny)
+	timber.TimeFormat("01/02 03:04:05pm MST")
+
+	config, err := conf.Read()
 	if err != nil {
 		timber.Fatal(err, "failed to load configuration")
 	}
 
-	setupLogger(conf)
-	conf.log()
+	config.Log()
 
-	mux := http.NewServeMux()
-	mux.HandleFunc("GET /", handle(conf))
+	secrets.Load()
 
-	mux.HandleFunc("GET /styles.css", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "styles.css")
-	})
-
-	server := http.Server{
-		Addr:    port,
-		Handler: logRequest(mux),
+	githubClient, err := github.Client()
+	if err != nil {
+		timber.Fatal(err, "failed to create github client")
 	}
 
-	timber.Donef("starting server on 0.0.0.0%s", port)
+	packages, err := pkg.Setup(config, &githubClient)
+	if err != nil {
+		timber.Fatal(err, "failed to setup packages")
+	}
+
+	server := api.Setup(config, packages)
+
+	timber.Donef("starting server on 0.0.0.0%s", server.Addr)
 	err = server.ListenAndServe()
 	if err != nil {
 		timber.Fatal(err, "failed to start server")
 	}
-}
-
-func setupLogger(conf config) {
-	timezone := conf.Logs.Timezone
-	if timezone != "" {
-		location, err := time.LoadLocation(timezone)
-		if err != nil {
-			timber.Fatal(err, "failed to load timezone:", timezone)
-		}
-		timber.Timezone(location)
-	}
-	format := conf.Logs.TimeFormat
-	if format != "" {
-		timber.TimeFormat(format)
-	}
-}
-
-const NOT_FOUND_ERROR = "package not found"
-
-func handle(conf config) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("x-powered-by", "vanityprox [https://github.com/gleich/vanityprox]")
-		if strings.HasSuffix(r.URL.Path, "/info/refs") {
-			http.Error(w, "this server does not serve git repositories", http.StatusNotFound)
-			return
-		}
-
-		name := strings.TrimPrefix(r.URL.Path, "/")
-		if name == "" {
-			renderIndexHTML(conf, w)
-			return
-		}
-		if name == "favicon.ico" {
-			http.Error(w, NOT_FOUND_ERROR, http.StatusNotFound)
-			return
-		}
-
-		renderPackageHTML(conf, w, r)
-	}
-}
-
-func internalServerError(w http.ResponseWriter, err error) {
-	timber.Error(err)
-	http.Error(w, err.Error(), http.StatusInternalServerError)
 }

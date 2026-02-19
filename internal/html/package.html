@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="go-import"
-      content="{{.Config.Host}}/{{.ProjectName}} git https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}"
+      content="{{.Config.Host}}/{{.Name}} git https://{{.Config.SourcePrefix}}/{{.Root}}"
     />
     <meta
       name="go-source"
-      content="{{.Config.Host}}/{{.ProjectName}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/tree/main/{/dir} https://{{.Config.SourcePrefix}}/{{.ProjectRoot}}/blob/main{/dir}/{file}#L{line}"
+      content="{{.Config.Host}}/{{.Name}} https://{{.Config.SourcePrefix}}/{{.Root}} https://{{.Config.SourcePrefix}}/{{.Root}}/tree/main/{/dir} https://{{.Config.SourcePrefix}}/{{.Root}}/blob/main{/dir}/{file}#L{line}"
     />
     <meta
       http-equiv="refresh"
-      content="0; url=https://pkg.go.dev/{{.Config.Host}}/{{.ProjectName}}"
+      content="0; url=https://pkg.go.dev/{{.Config.Host}}/{{.Name}}"
     />
     <link rel="icon" href="{{.Config.Favicon}}" />
     <link rel="stylesheet" href="/styles.css" />
-    <title>{{.ProjectName}}</title>
+    <title>{{.Name}}</title>
   </head>
   <style>
     body {
