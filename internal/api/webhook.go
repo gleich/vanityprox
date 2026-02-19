@@ -58,7 +58,8 @@ func webhookEndpoint(
 			return
 		}
 		timber.DoneSince(start, "updated", name)
-	} else {
+	} else if name != "" && owner != "" {
+
 		err = github.Unsubscribe(clients, owner, name)
 		if err != nil {
 			util.InternalServerError(w, fmt.Errorf("unsubscribing from %s/%s: %w", owner, name, err))
