@@ -38,14 +38,15 @@ func webhookEndpoint(
 		repo := e.GetRepo()
 		name = *repo.Name
 		owner = *repo.GetOwner().Name
+		owner = *repo.Owner.Login
 	case *githubREST.ReleaseEvent:
 		repo := e.GetRepo()
 		name = *repo.Name
-		owner = *repo.GetOwner().Name
+		owner = *repo.Owner.Login
 	case *githubREST.RepositoryEvent:
 		repo := e.GetRepo()
 		name = *repo.Name
-		owner = *repo.GetOwner().Name
+		owner = *repo.Owner.Login
 	}
 
 	repo := packages.Get(name)
