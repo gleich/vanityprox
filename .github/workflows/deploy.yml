@@ -17,6 +17,6 @@ jobs:
       - uses: caprover/deploy-from-github@v1.1.2
         with:
           server: https://lab.mattglei.ch
-          app: go.mattglei.ch
+          app: go
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
           image: ghcr.io/gleich/go.mattglei.ch
