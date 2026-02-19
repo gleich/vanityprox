@@ -9,13 +9,23 @@ import (
 )
 
 type Repository struct {
+	Owner       string
 	Name        string
 	Description string
 	Version     string
 	Updated     time.Time
 }
 
-func FetchRepo(client *githubv4.Client, owner, name string) (Repository, error) {
+func (r *Repository) Update(clients Clients) error {
+	update, err := FetchRepo(clients, r.Owner, r.Name)
+	if err != nil {
+		return err
+	}
+	*r = update
+	return nil
+}
+
+func FetchRepo(clients Clients, owner, name string) (Repository, error) {
 	var q struct {
 		Repository struct {
 			Name        githubv4.String
@@ -35,7 +45,7 @@ func FetchRepo(client *githubv4.Client, owner, name string) (Repository, error) 
 		"name":  githubv4.String(name),
 	}
 
-	if err := client.Query(context.Background(), &q, vars); err != nil {
+	if err := clients.GraphQL.Query(context.Background(), &q, vars); err != nil {
 		return Repository{}, fmt.Errorf("github graphql query for %s/%s: %w", owner, name, err)
 	}
 
@@ -45,6 +55,7 @@ func FetchRepo(client *githubv4.Client, owner, name string) (Repository, error) 
 	}
 
 	return Repository{
+		Owner:       "gleich",
 		Name:        string(q.Repository.Name),
 		Description: string(q.Repository.Description),
 		Version:     version,

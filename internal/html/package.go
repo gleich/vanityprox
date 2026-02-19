@@ -12,10 +12,9 @@ import (
 	"go.mattglei.ch/go.mattglei.ch/internal/util"
 )
 
-type packageTemplateData struct {
-	Name   string
-	Root   string
-	Config conf.Config
+type PackageTemplate struct {
+	Name string
+	Root string
 }
 
 var (
@@ -28,10 +27,9 @@ func RenderPackage(config conf.Config, w http.ResponseWriter, r *http.Request) {
 	name := strings.TrimPrefix(r.URL.Path, "/")
 	root := strings.Split(name, "/")[0]
 	if slices.Contains(config.Packages, root) {
-		data := packageTemplateData{
-			Name:   name,
-			Root:   root,
-			Config: config,
+		data := PackageTemplate{
+			Name: name,
+			Root: root,
 		}
 		err := packageTemplate.Execute(w, data)
 		if err != nil {

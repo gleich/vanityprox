@@ -12,7 +12,7 @@ import (
 	"go.mattglei.ch/go.mattglei.ch/internal/util"
 )
 
-type Index struct {
+type IndexTemplate struct {
 	Config   conf.Config
 	Packages []github.Repository
 }
@@ -24,7 +24,7 @@ var (
 )
 
 func RenderIndex(config conf.Config, packages *pkg.Packages, w http.ResponseWriter) {
-	data := Index{
+	data := IndexTemplate{
 		Packages: packages.All(),
 		Config:   config,
 	}

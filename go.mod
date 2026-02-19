@@ -4,6 +4,7 @@ go 1.26.0
 
 require (
 	github.com/caarlos0/env/v11 v11.3.1
+	github.com/google/go-github/v83 v83.0.0
 	github.com/joho/godotenv v1.5.1
 	github.com/pelletier/go-toml/v2 v2.2.4
 	github.com/shurcooL/githubv4 v0.0.0-20260209031235-2402fdf4a9ed
@@ -20,6 +21,7 @@ require (
 	github.com/charmbracelet/x/term v0.2.2 // indirect
 	github.com/clipperhouse/displaywidth v0.10.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
+	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.20 // indirect

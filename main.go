@@ -17,7 +17,7 @@ func main() {
 		timber.Fatal(err, "failed to read new york time location")
 	}
 	timber.Timezone(ny)
-	timber.TimeFormat("01/02 03:04:05pm MST")
+	timber.TimeFormat("01/02 03:04:05 PM  MST")
 
 	config, err := conf.Read()
 	if err != nil {
@@ -28,17 +28,17 @@ func main() {
 
 	secrets.Load()
 
-	githubClient, err := github.Client()
+	clients, err := github.CreateClients()
 	if err != nil {
 		timber.Fatal(err, "failed to create github client")
 	}
 
-	packages, err := pkg.Setup(config, &githubClient)
+	packages, err := pkg.Setup(config, clients)
 	if err != nil {
 		timber.Fatal(err, "failed to setup packages")
 	}
 
-	server := api.Setup(config, packages)
+	server := api.Setup(config, clients, packages)
 
 	timber.Donef("starting server on 0.0.0.0%s", server.Addr)
 	err = server.ListenAndServe()

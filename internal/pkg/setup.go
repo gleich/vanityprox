@@ -1,21 +1,28 @@
 package pkg
 
 import (
+	"fmt"
 	"time"
 
-	"github.com/shurcooL/githubv4"
 	"go.mattglei.ch/go.mattglei.ch/internal/conf"
 	"go.mattglei.ch/go.mattglei.ch/internal/github"
 	"go.mattglei.ch/timber"
 )
 
-func Setup(config conf.Config, client *githubv4.Client) (*Packages, error) {
+func Setup(
+	config conf.Config,
+	clients github.Clients,
+) (*Packages, error) {
 	start := time.Now()
 	p := Packages{}
 	for _, name := range config.Packages {
-		repo, err := github.FetchRepo(client, "gleich", name)
+		repo, err := github.FetchRepo(clients, "gleich", name)
 		if err != nil {
 			return &Packages{}, err
+		}
+		err = repo.Subscribe(clients)
+		if err != nil {
+			return &Packages{}, fmt.Errorf("creating webhook: %w", err)
 		}
 		p.packages = append(p.packages, repo)
 	}

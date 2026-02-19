@@ -13,7 +13,8 @@ import (
 var ENV Secrets
 
 type Secrets struct {
-	GitHubToken string `env:"GITHUB_TOKEN"`
+	GitHubToken         string `env:"GITHUB_TOKEN"`
+	GitHubWebhookSecret string `env:"GITHUB_WEBHOOK_SECRET"`
 }
 
 func Load() {
