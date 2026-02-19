@@ -13,9 +13,8 @@ import (
 )
 
 type PackageTemplate struct {
-	Name   string
-	Root   string
-	Config conf.Config
+	Name string
+	Root string
 }
 
 var (
@@ -29,9 +28,8 @@ func RenderPackage(config conf.Config, w http.ResponseWriter, r *http.Request) {
 	root := strings.Split(name, "/")[0]
 	if slices.Contains(config.Packages, root) {
 		data := PackageTemplate{
-			Name:   name,
-			Root:   root,
-			Config: config,
+			Name: name,
+			Root: root,
 		}
 		err := packageTemplate.Execute(w, data)
 		if err != nil {

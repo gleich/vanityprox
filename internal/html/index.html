@@ -36,7 +36,7 @@
     <link rel="icon" href="https://mattglei.ch/favicon.ico" />
 
     <!-- meta/opengraph -->
-    <meta name="description" content="{{.Config.Host}}" />
+    <meta name="description" content="go.mattglei.ch" />
     <meta name="url" content="https://go.mattglei.ch/" />
     <meta name="author" content="Matt Gleich" />
     <meta
@@ -76,8 +76,8 @@
       color="#292B2D"
     />
     <link rel="icon" href="https://mattglei.ch/favicon.ico" />
-    <meta property="og:title" content="{{.Config.Host}}" />
-    <meta property="og:description" content="{{.Config.Host}}" />
+    <meta property="og:title" content="go.mattglei.ch" />
+    <meta property="og:description" content="go.mattglei.ch" />
     <meta property="og:url" content="https://mattglei.ch/" />
     <meta property="og:site_name" content="mattglei.ch" />
     <meta property="og:locale" content="en-US" />
@@ -88,7 +88,7 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:creator" content="@matt_gleich" />
     <meta property="twitter:title" content="Matt Gleich" />
-    <meta property="twitter:description" content="{{.Config.Host}}" />
+    <meta property="twitter:description" content="go.mattglei.ch" />
     <meta
       property="twitter:image"
       content="https://mattglei.ch/opengraph.png"
@@ -96,7 +96,7 @@
     <meta property="twitter:image:width" content="1200" />
     <meta property="twitter:image:height" content="630" />
 
-    <title>{{.Config.Host}}</title>
+    <title>go.mattglei.ch</title>
 
     <link rel="stylesheet" href="/styles.css" />
 
@@ -107,8 +107,6 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
       rel="stylesheet"
     />
-
-    <!--  -->
   </head>
   <style>
     body {
@@ -258,7 +256,7 @@
         {{ range .Packages }}
         <a
           class="package"
-          href="https://pkg.go.dev/{{ $.Config.Host }}/{{ .Name }}"
+          href="https://pkg.go.dev/go.mattglei.ch/{{ .Name }}"
           target="_blank"
         >
           <div class="top">
@@ -280,7 +278,7 @@
             <p>{{ .Version }}</p>
           </div>
           <p class="description">{{ .Description }}</p>
-          <p class="import-path">{{ $.Config.Host }}/{{ .Name }}</p>
+          <p class="import-path">go.mattglei.ch/{{ .Name }}</p>
         </a>
         {{ end }}
       </div>

@@ -24,8 +24,6 @@ func main() {
 		timber.Fatal(err, "failed to load configuration")
 	}
 
-	config.Log()
-
 	secrets.Load()
 
 	clients, err := github.CreateClients()
