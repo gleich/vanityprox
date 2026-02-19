@@ -10,13 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: docker.mattglei.ch
+          username: admin
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - run: |
-          echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u gleich --password-stdin
-          docker build -t ghcr.io/gleich/go.mattglei.ch .
-          docker push ghcr.io/gleich/go.mattglei.ch
+          docker build -t docker.mattglei.ch/go.mattglei.ch .
+          docker push docker.mattglei.ch/go.mattglei.ch
       - uses: caprover/deploy-from-github@v1.1.2
         with:
           server: https://lab.mattglei.ch
           app: go
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
-          image: ghcr.io/gleich/go.mattglei.ch
+          image: docker.mattglei.ch/go.mattglei.ch
