@@ -13,7 +13,7 @@ func Setup(config conf.Config, clients github.Clients, packages *pkg.Packages) *
 
 	mux.HandleFunc("GET /", rootEndpoint(config, packages))
 	mux.HandleFunc("GET /health", healthEndpoint)
-	mux.HandleFunc("GET /github/webhook", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /github/webhook", func(w http.ResponseWriter, r *http.Request) {
 		webhookEndpoint(w, r, clients, packages)
 	})
 	mux.HandleFunc("GET /styles.css", func(w http.ResponseWriter, r *http.Request) {
