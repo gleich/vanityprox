@@ -10,7 +10,7 @@ import (
 	"go.mattglei.ch/go.mattglei.ch/internal/util"
 )
 
-func handle(config conf.Config, packages *pkg.Packages) http.HandlerFunc {
+func rootEndpoint(config conf.Config, packages *pkg.Packages) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("x-powered-by", "go.mattglei.ch [https://github.com/gleich/go.mattglei.ch]")
 		if strings.HasSuffix(r.URL.Path, "/info/refs") {
