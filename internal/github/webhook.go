@@ -30,7 +30,6 @@ func (r Repository) Subscribe(clients Clients) error {
 	_, _, err := clients.REST.Repositories.CreateHook(context.Background(), r.Owner, r.Name, hook)
 	if err != nil {
 		if strings.Contains(err.Error(), "Hook already exists on this repository") {
-			timber.Info(r.Name, "already has webhook subscription")
 			return nil
 		}
 		return fmt.Errorf("creating hook: %w", err)
