@@ -3,12 +3,12 @@ package main
 import (
 	"time"
 
+	"go.mattglei.ch/go.mattglei.ch/internal/api"
+	"go.mattglei.ch/go.mattglei.ch/internal/conf"
+	"go.mattglei.ch/go.mattglei.ch/internal/github"
+	"go.mattglei.ch/go.mattglei.ch/internal/pkg"
+	"go.mattglei.ch/go.mattglei.ch/internal/secrets"
 	"go.mattglei.ch/timber"
-	"go.mattglei.ch/vanityprox/internal/api"
-	"go.mattglei.ch/vanityprox/internal/conf"
-	"go.mattglei.ch/vanityprox/internal/github"
-	"go.mattglei.ch/vanityprox/internal/pkg"
-	"go.mattglei.ch/vanityprox/internal/secrets"
 )
 
 func main() {

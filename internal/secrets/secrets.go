@@ -24,7 +24,7 @@ func Load() {
 	}
 
 	secrets, err := env.ParseAsWithOptions[Secrets](
-		env.Options{RequiredIfNoDef: true, Prefix: "VANITYPROX_"},
+		env.Options{RequiredIfNoDef: true, Prefix: "go.mattglei.ch_"},
 	)
 	if err != nil {
 		timber.Fatal(err, "parsing required env vars failed")

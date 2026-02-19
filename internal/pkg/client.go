@@ -10,7 +10,7 @@ import (
 )
 
 func CreateClient() (githubv4.Client, error) {
-	envVarName := "VANITYPROX_GITHUB_TOKEN"
+	envVarName := "go.mattglei.ch_GITHUB_TOKEN"
 	token := os.Getenv(envVarName)
 	if token == "" {
 		return githubv4.Client{}, fmt.Errorf("%s is not defined", envVarName)

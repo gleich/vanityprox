@@ -3,8 +3,8 @@ package api
 import (
 	"net/http"
 
-	"go.mattglei.ch/vanityprox/internal/conf"
-	"go.mattglei.ch/vanityprox/internal/pkg"
+	"go.mattglei.ch/go.mattglei.ch/internal/conf"
+	"go.mattglei.ch/go.mattglei.ch/internal/pkg"
 )
 
 func Setup(config conf.Config, packages *pkg.Packages) *http.Server {

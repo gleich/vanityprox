@@ -6,10 +6,10 @@ import (
 	"html/template"
 	"net/http"
 
-	"go.mattglei.ch/vanityprox/internal/conf"
-	"go.mattglei.ch/vanityprox/internal/github"
-	"go.mattglei.ch/vanityprox/internal/pkg"
-	"go.mattglei.ch/vanityprox/internal/util"
+	"go.mattglei.ch/go.mattglei.ch/internal/conf"
+	"go.mattglei.ch/go.mattglei.ch/internal/github"
+	"go.mattglei.ch/go.mattglei.ch/internal/pkg"
+	"go.mattglei.ch/go.mattglei.ch/internal/util"
 )
 
 type Index struct {

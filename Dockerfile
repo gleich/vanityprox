@@ -4,15 +4,15 @@ FROM golang:1.26.0 AS build
 WORKDIR /src
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/vanityprox .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /bin/go.mattglei.ch .
 
 FROM alpine:3.20.2
 
 RUN apk update && apk add --no-cache ca-certificates=20250911-r0 tzdata=2025c-r0
 
 WORKDIR /src
-COPY --from=build /bin/vanityprox /bin/vanityprox
-COPY --from=build /src/vanityprox.toml .
+COPY --from=build /bin/go.mattglei.ch /bin/go.mattglei.ch
+COPY --from=build /src/go.mattglei.ch.toml .
 COPY --from=build /src/styles.css .
 
-CMD ["/bin/vanityprox"]
+CMD ["/bin/go.mattglei.ch"]

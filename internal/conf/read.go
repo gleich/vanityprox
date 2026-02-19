@@ -9,7 +9,7 @@ import (
 )
 
 func Read() (Config, error) {
-	filename := "vanityprox.toml"
+	filename := "go.mattglei.ch.toml"
 	bin, err := os.ReadFile(filename)
 	if err != nil {
 		return Config{}, fmt.Errorf("reading from %s: %w", filename, err)

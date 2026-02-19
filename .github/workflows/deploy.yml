@@ -12,11 +12,11 @@ jobs:
       - uses: actions/checkout@v4
       - run: |
           echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u gleich --password-stdin
-          docker build -t ghcr.io/gleich/vanityprox .
-          docker push ghcr.io/gleich/vanityprox
+          docker build -t ghcr.io/gleich/go.mattglei.ch .
+          docker push ghcr.io/gleich/go.mattglei.ch
       - uses: caprover/deploy-from-github@v1.1.2
         with:
           server: https://lab.mattglei.ch
-          app: vanityprox
+          app: go.mattglei.ch
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
-          image: ghcr.io/gleich/vanityprox
+          image: ghcr.io/gleich/go.mattglei.ch

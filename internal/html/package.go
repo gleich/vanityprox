@@ -8,8 +8,8 @@ import (
 	"slices"
 	"strings"
 
-	"go.mattglei.ch/vanityprox/internal/conf"
-	"go.mattglei.ch/vanityprox/internal/util"
+	"go.mattglei.ch/go.mattglei.ch/internal/conf"
+	"go.mattglei.ch/go.mattglei.ch/internal/util"
 )
 
 type packageTemplateData struct {

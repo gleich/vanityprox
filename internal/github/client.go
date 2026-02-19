@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/shurcooL/githubv4"
-	"go.mattglei.ch/vanityprox/internal/secrets"
+	"go.mattglei.ch/go.mattglei.ch/internal/secrets"
 	"golang.org/x/oauth2"
 )
 

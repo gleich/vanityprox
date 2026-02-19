@@ -4,7 +4,7 @@ import (
 	"sort"
 	"sync"
 
-	"go.mattglei.ch/vanityprox/internal/github"
+	"go.mattglei.ch/go.mattglei.ch/internal/github"
 )
 
 type Packages struct {

@@ -4,9 +4,9 @@ import (
 	"time"
 
 	"github.com/shurcooL/githubv4"
+	"go.mattglei.ch/go.mattglei.ch/internal/conf"
+	"go.mattglei.ch/go.mattglei.ch/internal/github"
 	"go.mattglei.ch/timber"
-	"go.mattglei.ch/vanityprox/internal/conf"
-	"go.mattglei.ch/vanityprox/internal/github"
 )
 
 func Setup(config conf.Config, client *githubv4.Client) (*Packages, error) {

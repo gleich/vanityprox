@@ -4,7 +4,7 @@ source_prefix = "https://github.com/gleich"
 packages = [
     "timber",
     "lcp",
-    "vanityprox",
+    "go.mattglei.ch",
     "ritcs",
     "terminal",
     "scripts"

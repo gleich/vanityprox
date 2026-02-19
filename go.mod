@@ -1,4 +1,4 @@
-module go.mattglei.ch/vanityprox
+module go.mattglei.ch/go.mattglei.ch
 
 go 1.26.0
 
