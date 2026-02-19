@@ -3,7 +3,6 @@ package api
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	githubREST "github.com/google/go-github/v83/github"
 	"go.mattglei.ch/go.mattglei.ch/internal/github"
@@ -19,7 +18,6 @@ func webhookEndpoint(
 	clients github.Clients,
 	packages *pkg.Packages,
 ) {
-	start := time.Now()
 	payload, err := githubREST.ValidatePayload(r, []byte(secrets.ENV.GitHubWebhookSecret))
 	if err != nil {
 		http.Error(w, "invalid signature", http.StatusUnauthorized)
@@ -57,13 +55,13 @@ func webhookEndpoint(
 			util.InternalServerError(w, err)
 			return
 		}
-		timber.DoneSince(start, "updated", name)
+		timber.Done("updated", name)
 	} else if name != "" && owner != "" {
 
 		err = github.Unsubscribe(clients, owner, name)
 		if err != nil {
 			util.InternalServerError(w, fmt.Errorf("unsubscribing from %s/%s: %w", owner, name, err))
 		}
-		timber.DoneSince(start, "unsubscribed", name)
+		timber.Done("removed webhook for", name)
 	}
 }
