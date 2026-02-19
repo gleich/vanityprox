@@ -113,7 +113,7 @@
       font-family: 'IBM Plex Sans';
       font-weight: 500;
 
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -165,7 +165,8 @@
     }
 
     .packages {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
       flex-wrap: wrap;
     }
@@ -216,6 +217,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    @media (max-width: 600px) {
+      .packages {
+        grid-template-columns: 1fr;
+      }
     }
 
     @keyframes spin {
