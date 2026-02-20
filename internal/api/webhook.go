@@ -37,7 +37,6 @@ func webhookEndpoint(
 	case *githubREST.PushEvent:
 		repo := e.GetRepo()
 		name = *repo.Name
-		owner = *repo.GetOwner().Name
 		owner = *repo.Owner.Login
 	case *githubREST.ReleaseEvent:
 		repo := e.GetRepo()
@@ -52,6 +51,11 @@ func webhookEndpoint(
 	repo := packages.Get(name)
 	if repo != nil {
 		err = repo.Update(clients)
+		if err != nil {
+			util.InternalServerError(w, err)
+			return
+		}
+		err = repo.Pull()
 		if err != nil {
 			util.InternalServerError(w, err)
 			return

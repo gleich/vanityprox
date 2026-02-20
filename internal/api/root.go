@@ -28,6 +28,6 @@ func rootEndpoint(config conf.Config, packages *pkg.Packages) http.HandlerFunc {
 			return
 		}
 
-		html.RenderPackage(config, w, r)
+		html.RenderPackage(config, packages, w, r)
 	}
 }
