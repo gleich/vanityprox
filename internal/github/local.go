@@ -38,8 +38,8 @@ func (r Repository) Clone() error {
 		return fmt.Errorf("creating url: %w", err)
 	}
 
-	cmd := exec.Command("git", "clone", repoURL, filepath.Join(CLONE_DIRECTORY, r.Name))
-	out, err := cmd.CombinedOutput()
+	out, err := exec.Command("git", "clone", repoURL, filepath.Join(CLONE_DIRECTORY, r.Name)).
+		CombinedOutput()
 	if err != nil {
 		timber.Debug(string(out))
 		return fmt.Errorf("running git clone: %w", err)
@@ -50,7 +50,13 @@ func (r Repository) Clone() error {
 }
 
 func (r Repository) Pull() error {
-	out, err := exec.Command("git", "pull", filepath.Join(CLONE_DIRECTORY, r.Name)).CombinedOutput()
+	cwd, err := os.Getwd()
+	if err != nil {
+		return fmt.Errorf("getting current directory: %w", err)
+	}
+	cmd := exec.Command("git", "pull")
+	cmd.Dir = filepath.Join(cwd, CLONE_DIRECTORY, r.Name)
+	out, err := cmd.CombinedOutput()
 	if err != nil {
 		timber.Debug(string(out))
 		return fmt.Errorf("running git pull: %w", err)
