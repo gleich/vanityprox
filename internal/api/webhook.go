@@ -56,9 +56,9 @@ func webhookEndpoint(
 		}
 		packages.Set(updatedRepo)
 
-		err = repo.Pull()
+		err = repo.Clone()
 		if err != nil {
-			util.InternalServerError(w, fmt.Errorf("pulling repo: %w", err))
+			util.InternalServerError(w, fmt.Errorf("cloning repo: %w", err))
 			return
 		}
 		timber.Done("updated", name)
