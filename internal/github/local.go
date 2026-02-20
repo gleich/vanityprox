@@ -61,7 +61,7 @@ func (r Repository) Pull() error {
 		timber.Debug(string(out))
 		return fmt.Errorf("running git pull: %w", err)
 	}
-	timber.Done("pulled latest changes in local repository")
+	timber.Done("pulled latest changes for", r.Name)
 	return nil
 }
 
