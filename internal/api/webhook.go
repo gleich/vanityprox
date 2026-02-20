@@ -50,14 +50,15 @@ func webhookEndpoint(
 
 	repo := packages.Get(name)
 	if repo != nil {
-		err = repo.Update(clients)
+		updatedRepo, err := github.FetchRepo(clients, repo.Owner, repo.Name)
 		if err != nil {
-			util.InternalServerError(w, err)
-			return
+			util.InternalServerError(w, fmt.Errorf("fetching repo: %w", err))
 		}
+		packages.Set(updatedRepo)
+
 		err = repo.Pull()
 		if err != nil {
-			util.InternalServerError(w, err)
+			util.InternalServerError(w, fmt.Errorf("pulling repo: %w", err))
 			return
 		}
 		timber.Done("updated", name)

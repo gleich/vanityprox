@@ -16,15 +16,6 @@ type Repository struct {
 	Updated     time.Time
 }
 
-func (r *Repository) Update(clients Clients) error {
-	update, err := FetchRepo(clients, r.Owner, r.Name)
-	if err != nil {
-		return err
-	}
-	*r = update
-	return nil
-}
-
 func FetchRepo(clients Clients, owner, name string) (Repository, error) {
 	var q struct {
 		Repository struct {

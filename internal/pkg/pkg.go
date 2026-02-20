@@ -32,3 +32,13 @@ func (p *Packages) Get(name string) *github.Repository {
 	}
 	return nil
 }
+
+func (p *Packages) Set(repo github.Repository) {
+	p.mutex.Lock()
+	defer p.mutex.Unlock()
+	for i := range p.packages {
+		if p.packages[i].Name == repo.Name {
+			p.packages[i] = repo
+		}
+	}
+}
