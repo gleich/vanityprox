@@ -17,6 +17,7 @@ func rootEndpoint(config conf.Config, packages *pkg.Packages) http.HandlerFunc {
 			http.Error(w, "this server does not serve git repositories", http.StatusNotFound)
 			return
 		}
+		w.Header().Set("Cache-Control", "no-store")
 
 		name := strings.TrimPrefix(r.URL.Path, "/")
 		if name == "" {
