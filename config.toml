@@ -7,5 +7,4 @@ packages = [
     "scripts",
     "newyear",
     "musicvault",
-    "notes",
 ]
