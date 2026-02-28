@@ -21,6 +21,6 @@ jobs:
       - uses: caprover/deploy-from-github@v1.1.2
         with:
           server: https://lab.mattglei.ch
-          app: go
+          app: gomodules
           token: '${{ secrets.CAPROVER_APP_TOKEN }}'
           image: docker.mattglei.ch/go.mattglei.ch
