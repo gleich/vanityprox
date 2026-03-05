@@ -43,7 +43,7 @@ func (r Repository) Clone() error {
 		}
 	}
 
-	repoURL, err := url.JoinPath("https://github.com/", r.Owner, r.Name+".git")
+	repoURL, err := url.JoinPath("https://github.com/gleich", r.Name+".git")
 	if err != nil {
 		return fmt.Errorf("creating url: %w", err)
 	}
